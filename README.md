@@ -1,9 +1,8 @@
-# Diary of a developer
+# mongoDB
 
-8 April 2018
+![Image of mongoDB](https://webassets.mongodb.com/_com_assets/cms/MongoDB-Logo-5c3a7405a85675366beb3a5ec4c032348c390b3f142f5e6dddf1d78e2df5cb5c.png)
 
-* kill that linux process using terminal -> type _ps -a_ to list all active processes and type _kill processid_ to terminate it. E.g. _kill 7510_
-
-10 April 2018
-
-* The Ultimate Atom Editor Setup (+for JS/React) - https://medium.com/productivity-freak/my-atom-editor-setup-for-js-react-9726cd69ad20
+Setting up mongoDB
+1. Download
+2. Unzip
+3. 
