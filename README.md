@@ -40,7 +40,15 @@ foo
 \> ObjectId()  
 ObjectId("5ae19784f739121c590fd964") 
 
+\> db.rhino.insert({x:10})  
+WriteResult({ "nInserted" : 1 })
 
+\> db.rhino.insert({x:10})  
+WriteResult({ "nInserted" : 1 })
+
+\> db.rhino.find()  
+{ "\_id" : ObjectId("5ae1a1cff739121c590fd96a"), "x" : 10 }  
+{ "\_id" : ObjectId("5ae1a1d1f739121c590fd96b"), "x" : 10 }
 
 
 #### Notes:
