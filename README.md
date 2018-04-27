@@ -1,4 +1,4 @@
-# mongoDB
+# Quickstart guide for mongoDB
 
 ![Image of mongoDB](https://webassets.mongodb.com/_com_assets/cms/MongoDB-Logo-5c3a7405a85675366beb3a5ec4c032348c390b3f142f5e6dddf1d78e2df5cb5c.png)
 
@@ -9,7 +9,7 @@
 4. In the terminal, I ran the command **Users/Neil/Documents/mongodb-osx-x86_64-3.6.4/bin/mongod**. Modify your's accordingly and run it. You will see the mongoDB server up and running.
 5. I started the shell with the command **./bin/mongo** after having **cd** to the **Users/Neil/Documents/mongodb-osx-x86_64-3.6.4/** directory.
 
-### Basic interaction with the shell
+### Basic interaction with the shell to warm up
 \> db  
 test
 
@@ -67,6 +67,43 @@ WriteResult({ "nInserted" : 1 })
 	]
 }
 
+\> db.a.save({\_id:1, x:10});  
+WriteResult({ "nMatched" : 0, "nUpserted" : 1, "nModified" : 0, "\_id" : 1 })
+
+\> db.a.update({\_id:1}, {$inc:{x:1}});  
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+\> db.a.find();  
+{ "\_id" : 1, "x" : 11 }
+
+\> db.a.update({\_id:1},{$set:{y:3}});    
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+\> db.a.update({\_id:1},{$inc:{x:1}});  
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+\> db.a.find()  
+{ "\_id" : 1, "x" : 12, "y" : 3 }
+
+\> db.a.update({\_id:1},{$unset:{y:''}});  
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+\> db.a.find();    
+{ "\_id" : 1, "x" : 12 }
+
+\> db.a.save({\_id:1, Naem:'bob'});  
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+> db.a.find();  
+{ "\_id" : 1, "Naem" : "bob" }
+
+\> db.a.update({\_id:1}, {$rename: {'Naem': 'Name'}});  
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+\> db.a.find();  
+{ "\_id" : 1, "Name" : "bob" }
+
+
 
 #### Notes:
 * A document must have an \_id field. The id cannot be an array.
@@ -78,8 +115,8 @@ WriteResult({ "nInserted" : 1 })
   * foo = collection name
   * query = which document?
   * update = what change?
-  * options = one? many? upsert*?
-* *upsert is defined as operation that "creates a new document when no document matches the query criteria.
+  * options = one? many? upsert?
+* upsert is defined as operation that "creates a new document when no document matches the query criteria.
 
 #### Some helpful links:
 * https://www.mongodb.org/dl/osx?_ga=2.10762484.1797709089.1524685437-1944241512.1524160976
