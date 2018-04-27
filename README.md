@@ -242,6 +242,7 @@ _With the blank {} operator, it is supposed to push the number 4 in all of them.
 
 #### Notes:
 * Use 'pwd()' instead of 'pwd' in the mongo shell.
+* Create a script in a folder for e.g. 'hello.sh' then call it in the shell using the command 'load('hello.sh')'.
 * A document must have an \_id field. The id cannot be an array.
 * The maximum document size is currently 16MB. However this might change in the future.
 * In mongoDB, we have no tables, we have collections instead.
@@ -259,7 +260,6 @@ _With the blank {} operator, it is supposed to push the number 4 in all of them.
 * $pop, $push, $pull and $addToSet will all fail on a non-array.
 * 'Find and Modify' enables us to find a specific entry and change it. For it's signature and more information: https://docs.mongodb.com/manual/reference/method/db.collection.findAndModify/
 * 
-
 
 #### Some helpful links:
 * https://www.mongodb.org/dl/osx?_ga=2.10762484.1797709089.1524685437-1944241512.1524160976
