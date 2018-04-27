@@ -268,6 +268,21 @@ true
 \> db.animals.find({\_id: {$gt:1, $lt:3}}, {\_id:1})  
 { "\_id" : 2 }
 
+--
+
+\> db.animals.find({\_id: {$not: {$lte:2}}}, {\_id:1})  
+{ "\_id" : 3 }
+
+--
+
+\> db.animals.find({\_id: {$in: \[1,3]}}, {\_id:1})  
+{ "\_id" : 1 }  
+{ "\_id" : 3 }  
+
+\> db.animals.find({\_id: {$nin: \[1,3]}}, {\_id:1})  
+{ "\_id" : 2 }  
+
+--
 
 #### Notes:
 * Use 'pwd()' instead of 'pwd' in the mongo shell.
