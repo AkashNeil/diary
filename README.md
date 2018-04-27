@@ -72,7 +72,14 @@ WriteResult({ "nInserted" : 1 })
 * A document must have an \_id field. The id cannot be an array.
 * The maximum document size is currently 16MB. However this might change in the future.
 * In mongoDB, we have no tables, we have collections instead.
-* If there is more than one collection with the same id, then the content of the latest one will always overwrite the previous ones. This occurs when we use the 'save' command. However if we use the 'insert' command, the shell will prevent you from using the same id! So, it is better you use 'insert' rather than 'save' when you are not sure about the uniqueness of your id. 
+* If there is more than one collection with the same id, then the content of the latest one will always overwrite the previous ones. This occurs when we use the 'save' command. However if we use the 'insert' command, the shell will prevent you from using the same id! So, it is better you use 'insert' rather than 'save' when you are not sure about the uniqueness of your id.
+* Prefer 'update' command over 'save'. The 'update' command is atomic within a document; no two clients can update the same document at the same time.
+* db.foo.update(query,update,options);
+  * foo = collection name
+  * query = which document?
+  * update = what change?
+  * options = one? many? upsert*?
+* *upsert is defined as operation that "creates a new document when no document matches the query criteria.
 
 #### Some helpful links:
 * https://www.mongodb.org/dl/osx?_ga=2.10762484.1797709089.1524685437-1944241512.1524160976
