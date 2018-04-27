@@ -53,7 +53,7 @@ WriteResult({ "nInserted" : 1 })
 \> db.user.insert({\_id:"bob@bob.com", Name: "Bob", Address: {Street: 'Blue Lantern', City: 'London'}, Music: \['Rock', 'Jazz']})  
 WriteResult({ "nInserted" : 1 })  
 
-> db.user.find().pretty()  
+\> db.user.find().pretty();    
 {
 	"\_id" : "bob@bob.com",
 	"Name" : "Bob",
@@ -65,7 +65,11 @@ WriteResult({ "nInserted" : 1 })
 		"Rock",
 		"Jazz"
 	]
-}
+}  
+
+_The format of the output above should look organised on your shell due to 'pretty()'._
+
+--
 
 \> db.a.save({\_id:1, x:10});  
 WriteResult({ "nMatched" : 0, "nUpserted" : 1, "nModified" : 0, "\_id" : 1 })
@@ -96,7 +100,7 @@ WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
 \> db.a.save({\_id:1, Naem:'bob'});  
 WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
 
-> db.a.find();  
+\> db.a.find();  
 { "\_id" : 1, "Naem" : "bob" }
 
 \> db.a.update({\_id:1}, {$rename: {'Naem': 'Name'}});  
@@ -142,6 +146,12 @@ WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 0 })
 
 \> db.a.find();  
 { "\_id" : 1, "things" : [ "one", "two", "two", "three" ] }
+
+_Notice, the behaviour of '$addToSet' compared to '$push'._
+
+--
+
+
 
 #### Notes:
 * A document must have an \_id field. The id cannot be an array.
