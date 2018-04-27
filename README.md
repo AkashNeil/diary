@@ -50,6 +50,23 @@ WriteResult({ "nInserted" : 1 })
 { "\_id" : ObjectId("5ae1a1cff739121c590fd96a"), "x" : 10 }  
 { "\_id" : ObjectId("5ae1a1d1f739121c590fd96b"), "x" : 10 }
 
+\> db.user.insert({\_id:"bob@bob.com", Name: "Bob", Address: {Street: 'Blue Lantern', City: 'London'}, Music: \['Rock', 'Jazz']})  
+WriteResult({ "nInserted" : 1 })  
+
+> db.user.find().pretty()  
+{
+	"\_id" : "bob@bob.com",
+	"Name" : "Bob",
+	"Address" : {
+		"Street" : "Blue Lantern",
+		"City" : "London"
+	},
+	"Music" : \[
+		"Rock",
+		"Jazz"
+	]
+}
+
 
 #### Notes:
 * A document must have an \_id field. The id cannot be an array.
