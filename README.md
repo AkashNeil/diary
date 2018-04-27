@@ -241,6 +241,7 @@ _With the blank {} operator, it is supposed to push the number 4 in all of them.
 
 
 #### Notes:
+* Use 'pwd()' instead of 'pwd' in the mongo shell.
 * A document must have an \_id field. The id cannot be an array.
 * The maximum document size is currently 16MB. However this might change in the future.
 * In mongoDB, we have no tables, we have collections instead.
@@ -256,7 +257,8 @@ _With the blank {} operator, it is supposed to push the number 4 in all of them.
 * $pull removes all instances of a specified element from an array.
 * $pop removes the last element in an array. If you want to remove the first element of an array, then use the $pop operator with a '-1' value.
 * $pop, $push, $pull and $addToSet will all fail on a non-array.
-
+* 'Find and Modify' enables us to find a specific entry and change it. For it's signature and more information: https://docs.mongodb.com/manual/reference/method/db.collection.findAndModify/
+* 
 
 
 #### Some helpful links:
