@@ -91,6 +91,8 @@ WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
 \> db.a.find();    
 { "\_id" : 1, "x" : 12 }
 
+--
+
 \> db.a.save({\_id:1, Naem:'bob'});  
 WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
 
@@ -103,7 +105,43 @@ WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
 \> db.a.find();  
 { "\_id" : 1, "Name" : "bob" }
 
+--
 
+\> db.a.save({\_id:1});    
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+\> db.a.find();  
+{ "\_id" : 1 }
+
+\> db.a.update({\_id:1}, {$push:{things: 'one'}});  
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+\> db.a.find();  
+{ "\_id" : 1, "things" : [ "one" ] }
+
+\> db.a.update({\_id:1}, {$push:{things: 'two'}});  
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+\> db.a.find();  
+{ "\_id" : 1, "things" : [ "one", "two" ] }
+
+\> db.a.update({\_id:1}, {$push:{things: 'two'}});  
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+\> db.a.find();  
+{ "\_id" : 1, "things" : [ "one", "two", "two" ] }
+
+\> db.a.update({\_id:1}, {$addToSet:{things: 'three'}});  
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+\> db.a.find();  
+{ "\_id" : 1, "things" : [ "one", "two", "two", "three" ] }
+
+\> db.a.update({\_id:1}, {$addToSet:{things: 'three'}});  
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 0 })
+
+\> db.a.find();  
+{ "\_id" : 1, "things" : [ "one", "two", "two", "three" ] }
 
 #### Notes:
 * A document must have an \_id field. The id cannot be an array.
@@ -117,6 +155,8 @@ WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
   * update = what change?
   * options = one? many? upsert?
 * upsert is defined as operation that "creates a new document when no document matches the query criteria.
+* $addToSet adds an element only if does not exist whereas $push will add the element even if it already exists.
+
 
 #### Some helpful links:
 * https://www.mongodb.org/dl/osx?_ga=2.10762484.1797709089.1524685437-1944241512.1524160976
