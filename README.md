@@ -54,18 +54,18 @@ WriteResult({ "nInserted" : 1 })
 WriteResult({ "nInserted" : 1 })  
 
 \> db.user.find().pretty();    
-{
-	"\_id" : "bob@bob.com",
-	"Name" : "Bob",
-	"Address" : {
-		"Street" : "Blue Lantern",
-		"City" : "London"
-	},
-	"Music" : \[
-		"Rock",
-		"Jazz"
-	]
-}  
+{  
+	"\_id" : "bob@bob.com",  
+	"Name" : "Bob",  
+	"Address" : {  
+		"Street" : "Blue Lantern",  
+		"City" : "London"  
+	},  
+	"Music" : \[  
+		"Rock",  
+		"Jazz"  
+	]  
+}    
 
 _The format of the output above should look organised on your shell due to 'pretty()'._
 
@@ -151,7 +151,55 @@ _Notice, the behaviour of '$addToSet' compared to '$push'._
 
 --
 
+\> db.a.update({\_id:1}, {$pull:{things: 'two'}});  
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
 
+\> db.a.find();    
+{ "\_id" : 1, "things" : [ "one", "three" ] }
+
+_Notice how $pull removed all instances of 'two'._
+
+--
+
+\> db.a.find();    
+{ "\_id" : 1, "things" : [ "one", "three" ] }
+
+\> db.a.update({\_id:1}, {$pop:{things: 1}});  
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+\> db.a.find();  
+{ "\_id" : 1, "things" : [ "one" ] }
+
+\> db.a.update({\_id:1}, {$push:{things: 'two'}});  
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+\> db.a.update({\_id:1}, {$push:{things: 'two'}});  
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+\> db.a.update({\_id:1}, {$push:{things: 'two'}});  
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+\> db.a.find();  
+{ "\_id" : 1, "things" : [ "one", "two", "two", "two" ] }
+
+\> db.a.update({\_id:1}, {$pop:{things: 2}});  
+WriteResult({  
+	"nMatched" : 0,  
+	"nUpserted" : 0,  
+	"nModified" : 0,  
+	"writeError" : {  
+		"code" : 9,  
+		"errmsg" : "$pop expects 1 or -1, found: 2"  
+	}  
+})  
+
+\> db.a.update({\_id:1}, {$pop:{things: -1}});  
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+\> db.a.find();  
+{ "\_id" : 1, "things" : [ "two", "two", "two" ] }
+
+--
 
 #### Notes:
 * A document must have an \_id field. The id cannot be an array.
@@ -166,6 +214,10 @@ _Notice, the behaviour of '$addToSet' compared to '$push'._
   * options = one? many? upsert?
 * upsert is defined as operation that "creates a new document when no document matches the query criteria.
 * $addToSet adds an element only if does not exist whereas $push will add the element even if it already exists.
+* $pull removes all instances of a specified element from an array.
+* $pop removes the last element in an array. If you want to remove the first element of an array, then use the $pop operator with a '-1' value.
+* $pop, $push, $pull and $addToSet will all fail on a non-array.
+
 
 
 #### Some helpful links:
