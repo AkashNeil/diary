@@ -238,6 +238,17 @@ _With the blank {} operator, it is supposed to push the number 4 in all of them.
 
 --
 
+\>load('animals')  
+true  
+
+\> db.animals.insert(animals)  
+
+\> db.animals.find()    
+{ "\_id" : 1, "item" : "ABC2", "details" : { "model" : "14Q3", "manufacturer" : "M1 Corporation" }, "stock" : \[ { "size" : "M", "qty" : 50 } ], "category" : "clothing" }
+{ "\_id" : 2, "item" : "MNO2", "details" : { "model" : "14Q3", "manufacturer" : "ABC Company" }, "stock" : \[ { "size" : "S", "qty" : 5 }, { "size" : "M", "qty" : 5 }, { "size" : "L", "qty" : 1 } ], "category" : "clothing" }
+{ "\_id" : 3, "item" : "IJK2", "details" : { "model" : "14Q2", "manufacturer" : "M5 Corporation" }, "stock" : \[ { "size" : "S", "qty" : 5 }, { "size" : "L", "qty" : 1 } ], "category" : "houseware" }
+
+--
 
 
 #### Notes:
