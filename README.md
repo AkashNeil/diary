@@ -261,7 +261,7 @@ _With the blank {} operator, it is supposed to push the number 4 in all of them.
 * 'Find and Modify' enables us to find a specific entry and change it. For it's signature and more information: https://docs.mongodb.com/manual/reference/method/db.collection.findAndModify/
 * db.collection.find(query, projection);
   * query - which documents
-  * projection - which fields
+  * projection - which fields (this is an optional parameter)
 * 
 
 #### Some helpful links:
