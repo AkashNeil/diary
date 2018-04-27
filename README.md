@@ -250,13 +250,31 @@ true
 
 --
 
+\> db.animals.find({\_id: {$gt:1}}, {\_id:1})  
+{ "\_id" : 2 }
+{ "\_id" : 3 }
+
+\> db.animals.find({\_id: {$lt:2}}, {\_id:1})  
+{ "\_id" : 1 }
+
+\> db.animals.find({\_id: {$lte:2}}, {\_id:1})  
+{ "\_id" : 1 }  
+{ "\_id" : 2 }  
+
+\> db.animals.find({\_id: {$gte:2}}, {\_id:1})  
+{ "\_id" : 2 }  
+{ "\_id" : 3 }
+
+\> db.animals.find({\_id: {$gt:1, $lt:3}}, {\_id:1})  
+{ "\_id" : 2 }
+
 
 #### Notes:
 * Use 'pwd()' instead of 'pwd' in the mongo shell.
 * Create a script in a folder for e.g. 'hello.sh' then call it in the shell using the command 'load('hello.sh')'.
 * A document must have an \_id field. The id cannot be an array.
 * The maximum document size is currently 16MB. However this might change in the future.
-* In mongoDB, we have no tables, we have collections instead.
+* In mongoDB, we do not have tables, we have collections instead.
 * If there is more than one collection with the same id, then the content of the latest one will always overwrite the previous ones. This occurs when we use the 'save' command. However if we use the 'insert' command, the shell will prevent you from using the same id! So, it is better you use 'insert' rather than 'save' when you are not sure about the uniqueness of your id.
 * Prefer 'update' command over 'save'. The 'update' command is atomic within a document; no two clients can update the same document at the same time.
 * db.foo.update(query,update,options);
@@ -273,6 +291,9 @@ true
 * db.collection.find(query, projection);
   * query - which documents
   * projection - which fields (this is an optional parameter)
+* We can use comparison operators such as $gt, $lt, $lte, $gte. For e.g. 
+  * db.animals.find({\_id: {$gte:2}}, {\_id:1})
+  * db.animals.find({\_id: {$gt:1, $lt:3}}, {\_id:1})
 * 
 
 #### Some helpful links:
