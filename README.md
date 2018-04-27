@@ -201,6 +201,45 @@ WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
 
 --
 
+\> db.a.find();  
+{ "\_id" : 1, "things" : [ 1, 2, 3 ] }
+{ "\_id" : 2, "things" : [ 2, 3 ] }
+{ "\_id" : 3, "things" : [ 3 ] }
+{ "\_id" : 4, "things" : [ 3, 7 ] }
+
+\> db.a.update({}, {$push: {things: 4}});  
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+\> db.a.find();  
+{ "\_id" : 1, "things" : [ 1, 2, 3, 4 ] }  
+{ "\_id" : 2, "things" : [ 2, 3 ] }  
+{ "\_id" : 3, "things" : [ 3 ] }  
+{ "\_id" : 4, "things" : [ 3, 7 ] }
+
+\> db.a.update({}, {$push: {things: 4}},{multi:true});  
+WriteResult({ "nMatched" : 4, "nUpserted" : 0, "nModified" : 4 })
+
+\> db.a.find();
+{ "\_id" : 1, "things" : [ 1, 2, 3, 4, 4 ] }  
+{ "\_id" : 2, "things" : [ 2, 3, 4 ] }  
+{ "\_id" : 3, "things" : [ 3, 4 ] }  
+{ "\_id" : 4, "things" : [ 3, 7, 4 ] }  
+
+\> db.a.update({things:2}, {$push: {things: 700}},{multi:true});
+WriteResult({ "nMatched" : 2, "nUpserted" : 0, "nModified" : 2 })
+
+\> db.a.find();  
+{ "\_id" : 1, "things" : [ 1, 2, 3, 4, 4, 700 ] }  
+{ "\_id" : 2, "things" : [ 2, 3, 4, 700 ] }  
+{ "\_id" : 3, "things" : [ 3, 4 ] }  
+{ "\_id" : 4, "things" : [ 3, 7, 4 ] }  
+
+_With the blank {} operator, it is supposed to push the number 4 in all of them. However, it did not because we also need {multi:true} for it to do multiple changes. And now if we want to update all where the number 2 is present, then we use {things:2} as shown above._
+
+--
+
+
+
 #### Notes:
 * A document must have an \_id field. The id cannot be an array.
 * The maximum document size is currently 16MB. However this might change in the future.
