@@ -284,6 +284,49 @@ true
 
 --
 
+\> db.real_animals.find({tags: {$in: \['cute','ocean']}}, {name:1})  
+{ "\_id" : 1, "name" : "cat" }  
+{ "\_id" : 2, "name" : "rabbit" }  
+{ "\_id" : 3, "name" : "shark" }  
+{ "\_id" : 4, "name" : "dolphin" }  
+{ "\_id" : 5, "name" : "penguin" }  
+{ "\_id" : 6, "name" : "duck" }  
+
+_As seen above, the '$in' operator will bring those that match either conditions in the array._
+
+--
+
+\> db.real_animals.find({tags: {$all: \['cute','ocean']}}, {name:1})  
+{ "\_id" : 4, "name" : "dolphin" }  
+{ "\_id" : 5, "name" : "penguin" }  
+
+_As seen above, the '$all' operator will bring those that match both conditions in the array._
+
+--
+
+\> db.real_animals.find({"info.canFly":true})  
+{ "\_id" : 6, "name" : "duck", "tags" : \[ "land", "cute" ], "info" : { "type" : "bird", "canFly" : true } }  
+
+_In the above dot notation 'info.canFly' has been used._
+
+--
+
+\> db.real_animals.find({info: {type: 'bird', canFly: true}}, {name:1})  
+{ "\_id" : 6, "name" : "duck" }  
+
+\> db.real_animals.find({info: {canFly: true, type: 'bird'}}, {name:1})  
+no match!
+
+\> db.real_animals.find({info: {type: 'bird'}}, {name:1})
+no match!
+
+\> db.real_animals.find({"info.canFly": true, "info.type": 'bird'}, {name:1})  
+{ "\_id" : 6, "name" : "duck" }
+
+_See how the use of dot notation makes a difference_
+
+--
+
 #### Notes:
 * Use 'pwd()' instead of 'pwd' in the mongo shell.
 * Create a script in a folder for e.g. 'hello.sh' then call it in the shell using the command 'load('hello.sh')'.
@@ -309,6 +352,9 @@ true
 * We can use comparison operators such as $gt, $lt, $lte, $gte. For e.g. 
   * db.animals.find({\_id: {$gte:2}}, {\_id:1})
   * db.animals.find({\_id: {$gt:1, $lt:3}}, {\_id:1})
+* $in and $nin (not in) operators are a bit like 'equal' and 'not equal' respectively. 
+* When used with an array, '$in' can be assumed to be 'either or' (any condition in the array can be true) while '$all' is like 'and', i.e. all conditions in the array must be true.
+* Dot notation can be used to access data.
 * 
 
 #### Some helpful links:
