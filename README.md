@@ -414,6 +414,79 @@ _The above demonstrates the cursor in mongodb._
 
 --
 
+\> db.real_animals.find({},{name:1}).sort({name:1})  
+{ "\_id" : 1, "name" : "cat" }  
+{ "\_id" : 4, "name" : "dolphin" }  
+{ "\_id" : 6, "name" : "duck" }  
+{ "\_id" : 5, "name" : "penguin" }  
+{ "\_id" : 2, "name" : "rabbit" }  
+{ "\_id" : 3, "name" : "shark" }  
+
+\> db.real_animals.find({},{name:1}).sort({name:-1})  
+{ "\_id" : 3, "name" : "shark" }  
+{ "\_id" : 2, "name" : "rabbit" }  
+{ "\_id" : 5, "name" : "penguin" }  
+{ "\_id" : 6, "name" : "duck" }  
+{ "\_id" : 4, "name" : "dolphin" }  
+{ "\_id" : 1, "name" : "cat" }  
+
+_The 'sort()' operator is used to order the result in ascending (use positive) or descending (use negative) order._
+
+--
+
+_We can also sort sub documents:_
+
+\> db.real_animals.find({},{name:1, "info.type":1}).sort({"info.type":1, "name":-1})  
+{ "\_id" : 5, "name" : "penguin", "info" : { "type" : "bird" } }  
+{ "\_id" : 6, "name" : "duck", "info" : { "type" : "bird" } }  
+{ "\_id" : 3, "name" : "shark", "info" : { "type" : "fish" } }  
+{ "\_id" : 2, "name" : "rabbit", "info" : { "type" : "mammal" } }  
+{ "\_id" : 4, "name" : "dolphin", "info" : { "type" : "mammal" } }  
+{ "\_id" : 1, "name" : "cat", "info" : { "type" : "mammal" } }  
+
+\> db.real_animals.find({},{name:1, "info.type":1}).sort({"info.type":1, "name":1})  
+{ "\_id" : 6, "name" : "duck", "info" : { "type" : "bird" } }  
+{ "\_id" : 5, "name" : "penguin", "info" : { "type" : "bird" } }  
+{ "\_id" : 3, "name" : "shark", "info" : { "type" : "fish" } }  
+{ "\_id" : 1, "name" : "cat", "info" : { "type" : "mammal" } }  
+{ "\_id" : 4, "name" : "dolphin", "info" : { "type" : "mammal" } }  
+{ "\_id" : 2, "name" : "rabbit", "info" : { "type" : "mammal" } }  
+
+--
+
+\> db.real_animals.find({},{\_id:1}).sort({\_id:-1}).limit(3)  
+{ "\_id" : 6 }  
+{ "\_id" : 5 }  
+{ "\_id" : 4 }  
+
+_The 'limit()' function restricts the output._
+
+--
+
+\> db.real_animals.find({},{\_id:1}).sort({\_id:-1}).skip(1).limit(3)  
+{ "\_id" : 5 }  
+{ "\_id" : 4 }  
+{ "\_id" : 3 }  
+
+_We can use the skip() function to skip a certain amount of document(s). In the above skipped one document and limited the result to 3._
+
+--
+
+\> db.real_animals.findOne({\_id:1})
+{
+	"\_id" : 1,
+	"name" : "cat",
+	"tags" : \[
+		"land",
+		"cute"
+	],
+	"info" : {
+		"type" : "mammal",
+		"color" : "red"
+	}
+}  
+
+--
 
 #### Notes:
 * Use 'pwd()' instead of 'pwd' in the mongo shell.
@@ -443,6 +516,17 @@ _The above demonstrates the cursor in mongodb._
 * $in and $nin (not in) operators are a bit like 'equal' and 'not equal' respectively. 
 * When used with an array, '$in' can be assumed to be 'either or' (any condition in the array can be true) while '$all' is like 'and', i.e. all conditions in the array must be true.
 * Dot notation can be used to access data.
+* Find
+  * Query criteria
+    * Single value field
+    * Array field
+    * Sub-document/dot notation
+* Projection
+  * Filed inclusion or exclusion
+* Cursor
+  * Sort
+  * Skip
+  * Limit
 * 
 
 #### Some helpful links:
