@@ -315,17 +315,105 @@ _In the above dot notation 'info.canFly' has been used._
 { "\_id" : 6, "name" : "duck" }  
 
 \> db.real_animals.find({info: {canFly: true, type: 'bird'}}, {name:1})  
-no match!
+No match! Because it wants to match in the same order and existance of all of them
 
 \> db.real_animals.find({info: {type: 'bird'}}, {name:1})
-no match!
+No match!
 
 \> db.real_animals.find({"info.canFly": true, "info.type": 'bird'}, {name:1})  
 { "\_id" : 6, "name" : "duck" }
 
-_See how the use of dot notation makes a difference_
+_See how the use of dot notation makes a difference for a sub document._
 
 --
+
+\> db.real_animals.find({"info.canFly": null}, {name:1})  
+{ "\_id" : 1, "name" : "cat" }  
+{ "\_id" : 2, "name" : "rabbit" }  
+{ "\_id" : 3, "name" : "shark" }  
+{ "\_id" : 4, "name" : "dolphin" }  
+
+\> db.real_animals.find({"info.canFly": {$exists: true}}, {name:1})  
+{ "\_id" : 4, "name" : "dolphin" }  
+{ "\_id" : 5, "name" : "penguin" }  
+{ "\_id" : 6, "name" : "duck" }  
+
+\> db.real_animals.find({"info.canFly": {$exists: false}}, {name:1})  
+{ "\_id" : 1, "name" : "cat" }  
+{ "\_id" : 2, "name" : "rabbit" }  
+{ "\_id" : 3, "name" : "shark" }  
+
+_Notice the difference between 'null' and '$exists'. The 'dolphin' record has a 'canFly' field but the 'cat' record does not have the 'canFly' field. However will 'null' both have been returned. With the $exists operator, only those that have that field will be returned._
+
+--
+
+\> db.real_animals.find({"info.type": 'bird', tags:'cute'}, {name:1})  
+{ "\_id" : 5, "name" : "penguin" }  
+{ "\_id" : 6, "name" : "duck" }  
+
+\> db.real_animals.find({"info.type": 'bird', tags:'ocean'}, {name:1})  
+{ "\_id" : 5, "name" : "penguin" }  
+
+_Notice that the comma acts like an 'and'. E.g. {"info.type": 'bird' AND tags:'ocean'}_
+
+--
+
+\> db.real_animals.find({\_id:1},{\_id:1,name:1})
+{ "\_id" : 1, "name" : "cat" }
+
+\> db.real_animals.find({\_id:1},{\_id:0,name:0})
+{ "tags" : \[ "land", "cute" ], "info" : { "type" : "mammal", "color" : "red" } }
+
+\> db.real_animals.find({\_id:1},{name:0, info:0})
+{ "\_id" : 1, "tags" : \[ "land", "cute" ] }
+
+_Notice that the '_id' field has been returned even if it has not been mentioned. In fact, this is a special field and it is the only field that behaves this way. It we do not want the _id field to be returned, then we have to explicitly mention it._
+
+\> db.real_animals.find({\_id:1},{\_id:0,name:1})  
+{ "name" : "cat" }
+
+\> db.real_animals.find({\_id:1},{\_id:0,name:1, info:0})    
+Error: error: {
+	"ok" : 0,
+	"errmsg" : "Projection cannot have a mix of inclusion and exclusion.",
+	"code" : 2,
+	"codeName" : "BadValue"
+}
+
+_Also as shown above, we cannot have a mix of inclusion and exclusion._
+
+--
+
+\>db.real_animals.find({},{name:1})  
+{ "\_id" : 1, "name" : "cat" }  
+{ "\_id" : 2, "name" : "rabbit" }  
+{ "\_id" : 3, "name" : "shark" }  
+{ "\_id" : 4, "name" : "dolphin" }  
+{ "\_id" : 5, "name" : "penguin" }  
+{ "\_id" : 6, "name" : "duck" }  
+
+\> var c = db.real_animals.find({},{name:1})  
+\> c.size()  
+6 
+
+\> c.hasNext()  
+true  
+
+\> c.forEach(function(d){print(d.name)})  
+cat  
+rabbit  
+shark  
+dolphin  
+penguin    
+duck  
+
+\> c.hasNext()  
+false  
+
+_The above demonstrates the cursor in mongodb._
+
+--
+
 
 #### Notes:
 * Use 'pwd()' instead of 'pwd' in the mongo shell.
@@ -348,7 +436,7 @@ _See how the use of dot notation makes a difference_
 * 'Find and Modify' enables us to find a specific entry and change it. For it's signature and more information: https://docs.mongodb.com/manual/reference/method/db.collection.findAndModify/
 * db.collection.find(query, projection);
   * query - which documents
-  * projection - which fields (this is an optional parameter)
+  * projection - which fields to return (this is an optional parameter)
 * We can use comparison operators such as $gt, $lt, $lte, $gte. For e.g. 
   * db.animals.find({\_id: {$gte:2}}, {\_id:1})
   * db.animals.find({\_id: {$gt:1, $lt:3}}, {\_id:1})
