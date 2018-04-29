@@ -488,6 +488,39 @@ _We can use the skip() function to skip a certain amount of document(s). In the 
 
 --
 
+\> db.real_animals.ensureIndex({name:1})  
+{
+	"createdCollectionAutomatically" : false,
+	"numIndexesBefore" : 1,
+	"numIndexesAfter" : 2,
+	"ok" : 1
+}  
+
+_The above '.ensureIndex' creates an index on name. '1' means ascending (A-Z), '-1' means descending (Z-A)._  
+
+> db.real_animals.find({name:'cat'}).explain()
+This will show details about the index, etc.
+
+--
+
+\> db.real_animals.dropIndex("name_1")  
+{ "nIndexesWas" : 2, "ok" : 1 }  
+
+\> db.real_animals.dropIndex("name_1")  
+{
+	"nIndexesWas" : 1,
+	"ok" : 0,
+	"errmsg" : "index not found with name [name_1]",
+	"code" : 27,
+	"codeName" : "IndexNotFound"
+}  
+
+_'.dropIndex' is used to drop an index. After the index is removed, mongo will let you know it about it if you try to remove it again._
+
+--
+
+
+
 #### Notes:
 * Use 'pwd()' instead of 'pwd' in the mongo shell.
 * Sharding in MongoDB is a method for distributing data across multiple machines.
@@ -534,6 +567,7 @@ _We can use the skip() function to skip a certain amount of document(s). In the 
   * Text
   * Hashed
   * TTL 
+* Unique index, Sparse index, Compound index, Covering index
 
 #### Some helpful links:
 * https://www.mongodb.org/dl/osx?_ga=2.10762484.1797709089.1524685437-1944241512.1524160976
