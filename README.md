@@ -9,6 +9,12 @@
 4. In the terminal, I ran the command **Users/Neil/Documents/mongodb-osx-x86_64-3.6.4/bin/mongod**. Modify your's accordingly and run it. You will see the mongoDB server up and running.
 5. I started the shell with the command **./bin/mongo** after having **cd** to the **Users/Neil/Documents/mongodb-osx-x86_64-3.6.4/** directory.
 
+Optional:
+To connect to MongoDB Atlas, I did the following:
+1. MacBook-Pro:mongodb-osx-x86_64-3.6.4 Neil$ ./bin/mongo "mongodb+srv://bigdata-cibni.mongodb.net/test" --username Neil  
+2. Enter password.
+
+
 ### Basic interaction with the shell to warm up
 \> db  
 test
