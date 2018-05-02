@@ -529,7 +529,9 @@ _'.dropIndex' is used to drop an index. After the index is removed, mongo will l
 
 #### Notes:
 * Use 'pwd()' instead of 'pwd' in the mongo shell.
-* Sharding in MongoDB is a method for distributing data across multiple machines.
+* The MongoDB Manual defines sharding as "a method for distributing data across multiple machines. MongoDB uses sharding to support deployments with very large data sets and high throughput operations.”
+* A **cursor** is a pointer to the current location in the result set.
+* **Projections** are just used to limit the result set.
 * Create a script in a folder for e.g. 'hello.sh' then call it in the shell using the command 'load('hello.sh')'.
 * A document must have an \_id field. The id cannot be an array.
 * The maximum document size is currently 16MB. However this might change in the future.
