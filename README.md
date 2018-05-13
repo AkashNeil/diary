@@ -576,6 +576,11 @@ _'.dropIndex' is used to drop an index. After the index is removed, mongo will l
   * Hashed
   * TTL 
 * Unique index, Sparse index, Compound index, Covering index
+* Type Check
+  * The { name : { $type: 10 } } query matches documents that contains the name field whose value is null only; i.e. the value of the name field is of BSON Type Null (i.e. 10) :   
+    * db.users.find( { name : { $type: 10 } } )   
+* The query returns only the document where the name field has a null value:   
+  * { "_id" : 900, "name" : null }
 
 #### Some helpful links:
 * https://www.mongodb.org/dl/osx?_ga=2.10762484.1797709089.1524685437-1944241512.1524160976
