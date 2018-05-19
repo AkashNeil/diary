@@ -580,9 +580,10 @@ _'.dropIndex' is used to drop an index. After the index is removed, mongo will l
   * The { name : { $type: 10 } } query matches documents that contains the name field whose value is null only; i.e. the value of the name field is of BSON Type Null (i.e. 10) :   
     * db.users.find( { name : { $type: 10 } } )   
   * The query returns only the document where the name field has a null value:   
-    * { "/_id" : 900, "name" : null }
+    * { "/_id" : 900, "name" : null }   
+    
 * To import a json file:   
-  * exit the shell and type the command:   
+  * exit the shell and type the command:   
     * mongoimport --db dbName --collection collectionName --file fileName.json   
 
 #### Some helpful links:
