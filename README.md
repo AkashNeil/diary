@@ -581,9 +581,9 @@ _'.dropIndex' is used to drop an index. After the index is removed, mongo will l
     * db.users.find( { name : { $type: 10 } } )   
   * The query returns only the document where the name field has a null value:   
     * { "/_id" : 900, "name" : null }
-* To import a json file:
-  * exit the shell and type the command:
-    * mongoimport --db dbName --collection collectionName --file fileName.json
+* To import a json file:   
+  * exit the shell and type the command:   
+    * mongoimport --db dbName --collection collectionName --file fileName.json   
 
 #### Some helpful links:
 * https://www.mongodb.org/dl/osx?_ga=2.10762484.1797709089.1524685437-1944241512.1524160976
